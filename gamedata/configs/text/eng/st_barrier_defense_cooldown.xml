@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<string id="ui_mcm_menu_barrier_defense_cooldown">
+		<text>Barrier Defense Cooldown</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_title">
+		<text>Barrier Defense Cooldown Configuration</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_cooldown_days">
+		<text>Days Between Barrier Defense</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_cooldown_days_desc">
+		<text>This will change the cooldown before Barrier Defense can start.\nDefault: 7 days</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown">
+		<text>Days Before Barrier Defense Start</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown_desc">
+		<text>This will change the amount of days on a new save before Barrier Defense can start to appear.\nDefault: 7 days</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown">
+		<text>Days Before Barrier Defense Start</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown_desc">
+		<text>This will change the amount of days on a new save before Barrier Defense can start to appear.\nDefault: 7 days</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_repeatable">
+		<text>Barrier Defense Repeatable</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_repeatable_desc">
+		<text>Allows the Barrier quests to be repeatable or not.\nDefault: False</text>
+	</string>
+</string_table>
