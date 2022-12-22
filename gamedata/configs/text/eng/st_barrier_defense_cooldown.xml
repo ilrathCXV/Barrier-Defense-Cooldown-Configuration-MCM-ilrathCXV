@@ -30,4 +30,18 @@
 	<string id="ui_mcm_barrier_defense_cooldown_repeatable_desc">
 		<text>Allows the Barrier quests to be repeatable or not.\nDefault: False</text>
 	</string>
+	
+	<string id="ui_mcm_barrier_defense_cooldown_monolith">
+		<text>Monolith Barrier Event</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_monolith_desc">
+		<text>Decides whether or not the Monolith Barrier task can be rolled\nDefault: True</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_zombies">
+		<text>Zombified Stalkers Barrier Event</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_zombies_desc">
+		<text>Decides whether or not the Zombies Barrier task can be rolled\nDefault: True</text>
+	</string>
+	
 </string_table>

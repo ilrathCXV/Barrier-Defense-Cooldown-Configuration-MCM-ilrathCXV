@@ -5,7 +5,6 @@ local monolith_active = get_config("monolith")
 local zombies_active = get_config("zombies")
 local is_repeatable = get_config("repeatable")
 
-
 ----------------------------------------------------------------------------------
 ------------------- Barrier Stuff - ilrathCXV Dec. 9, 2022 -----------------------
 ----------------------------------------------------------------------------------
@@ -43,6 +42,17 @@ function tasks_defense.barrier_defense_available(tid)
 	printl('barrier_defense_available(%s)',tid)
 	-- dont crash
 	if not db.actor then return false end
+	
+----------------------------------------------------------------------------
+------------------------- ilrathCXV choice edits ---------------------------
+----------------------------------------------------------------------------
+
+	if (not monolith_active and (tid == 'barrier_defense_monolith')) then return false end
+	if (not zombies_active and (tid == 'barrier_defense_zombie')) then return false end
+	
+----------------------------------------------------------------------------
+------------------------ ilrathCXV choice edits end ------------------------
+----------------------------------------------------------------------------
 	
 	-- dont trigger if already had message
 	if not is_repeatable then
