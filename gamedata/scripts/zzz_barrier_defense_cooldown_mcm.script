@@ -4,6 +4,8 @@ local defaults = {
 	["monolith"] = true,
 	["zombies"] = true,
 	["repeatable"] = false,
+	["modify_chance"] = false,
+	["chance_percent"] = 50,
 }
 
 function get_config(key)
@@ -19,6 +21,8 @@ function on_mcm_load()
 			{id = "monolith", type = "check", val = 1, def=true},
             {id = "zombies", type = "check", val = 1, def=true},
             {id = "repeatable", type = "check", val = 1, def=false},
+			{id = "modify_chance", type = "check", val = 1, def=false},
+			{id = "chance_percent", type = "track", val = 2, min = 0, max = 100, step = 1, def = 50 },
 		}
 	}
 	return options

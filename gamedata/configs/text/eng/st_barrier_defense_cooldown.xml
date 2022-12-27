@@ -44,4 +44,18 @@
 		<text>Decides whether or not the Zombies Barrier task can be rolled\nDefault: True</text>
 	</string>
 	
+	<string id="ui_mcm_barrier_defense_cooldown_modify_chance">
+		<text>Modify Trigger Chance?</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_modify_chance_desc">
+		<text>Allow the player to modify the chance of the event triggering when conditions are met. Setting it to 'False' will let the base script take care of the chance.\nDefault: False</text>
+	</string>
+	
+	<string id="ui_mcm_barrier_defense_cooldown_chance_percent">
+		<text>Barrier Event Chance (%)</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_chance_percent_desc">
+		<text>Determine the chance of the Barrier Task triggering when conditions are met. THIS SETTING ONLY WORKS IF "Modify Trigger Chance" IS ENABLED\nDefault: 50</text>
+	</string>
+	
 </string_table>

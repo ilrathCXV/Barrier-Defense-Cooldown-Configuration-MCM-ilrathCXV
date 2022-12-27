@@ -4,10 +4,14 @@ local starting_cooldown_modified = get_config("starting_cooldown") or defaults["
 local monolith_active = get_config("monolith")
 local zombies_active = get_config("zombies")
 local is_repeatable = get_config("repeatable")
+local modify_chance = get_config("modify_chance")
+local chance_percent = get_config("chance_percent") or defaults["chance_percent"] or 50
 
 ----------------------------------------------------------------------------------
 ------------------- Barrier Stuff - ilrathCXV Dec. 9, 2022 -----------------------
+------------------------ Last Updated: Dec. 22, 2022 -----------------------------
 ----------------------------------------------------------------------------------
+
 barrier_defense_available = tasks_defense.barrier_defense_available
 local ta2ti = utils_data.CTime_from_table
 local ti2ta = utils_data.CTime_to_table
@@ -115,8 +119,21 @@ function tasks_defense.barrier_defense_available(tid)
 		-- -- printf('chance: %s',x)
 		-- return x
 	-- end
+----------------------------------------------------------------------------
+-------------------------- ilrathCXV chance edits --------------------------
+----------------------------------------------------------------------------
+
+	local chance
 	
-	local chance = DEBUG and -1 or ((tid == 'barrier_defense_monolith') and 0.75 or 0.5)
+	if modify_chance then
+		chance = 1 - (chance_percent * 0.01) 
+	else
+		chance = DEBUG and -1 or ((tid == 'barrier_defense_monolith') and 0.75 or 0.5)
+	end
+	
+----------------------------------------------------------------------------
+------------------------ ilrathCXV chance edits end ------------------------
+----------------------------------------------------------------------------
 	
 	-- local ret = pret(math.random()) > chance
 	local ret = math.random() > chance
