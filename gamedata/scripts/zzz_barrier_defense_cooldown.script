@@ -1,15 +1,16 @@
-local get_config            = zzz_barrier_defense_cooldown_mcm.get_config
-local cooldown_days_modified = get_config("cooldown_days") or defaults["cooldown_days"] or 7
-local starting_cooldown_modified = get_config("starting_cooldown") or defaults["starting_cooldown"] or 7
-local monolith_active = get_config("monolith")
-local zombies_active = get_config("zombies")
-local is_repeatable = get_config("repeatable")
-local modify_chance = get_config("modify_chance")
-local chance_percent = get_config("chance_percent") or defaults["chance_percent"] or 50
+local get_config = zzz_barrier_defense_cooldown_mcm.get_config
+
+local cooldown_days_modified = get_config("cooldown_days") or 7
+local starting_cooldown_modified = get_config("starting_cooldown") or 7
+local monolith_active = get_config("monolith") or true
+local zombies_active = get_config("zombies") or true
+local is_repeatable = get_config("repeatable") or false
+local modify_chance = get_config("modify_chance") or false
+local chance_percent = get_config("chance_percent") or 50
 
 ----------------------------------------------------------------------------------
 ------------------- Barrier Stuff - ilrathCXV Dec. 9, 2022 -----------------------
------------------------- Last Updated: Dec. 22, 2022 -----------------------------
+----------------------- Last Updated: March 29, 2024 -----------------------------
 ----------------------------------------------------------------------------------
 
 barrier_defense_available = tasks_defense.barrier_defense_available
@@ -58,12 +59,11 @@ function tasks_defense.barrier_defense_available(tid)
 ------------------------ ilrathCXV choice edits end ------------------------
 ----------------------------------------------------------------------------
 	
-	-- dont trigger if already had message
+		-- dont trigger if already had message
 	if not is_repeatable then
 		if db.actor:has_info('barrier_defense_monolith_announced') then return false end
 		if db.actor:has_info('barrier_defense_zombie_announced') then return false end
 	end
-	
 	-- dont trigger if quest already started
 	if axr_task_manager.ongoing_tasks['barrier_defense_monolith'] then return false end
 	if axr_task_manager.ongoing_tasks['barrier_defense_zombie'] then return false end
@@ -80,7 +80,7 @@ function tasks_defense.barrier_defense_available(tid)
 	-- if game.get_game_time():diffSec(level.get_start_time()) < 3600 * 24 * 7 and not DEBUG then return false end
 	
 	if game.get_game_time():diffSec(level.get_start_time()) < 3600 * 24 * starting_cooldown_modified and not DEBUG then return false end
-
+	
 	
 	-- printl('barrier_defense_available(%s) CCC',tid)
 	-- dont trigger if less than a week passed since last defense, either joined or skipped
