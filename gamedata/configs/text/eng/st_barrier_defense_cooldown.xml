@@ -58,4 +58,11 @@
 		<text>Determine the chance of the Barrier Task triggering when conditions are met. THIS SETTING ONLY WORKS IF "Modify Trigger Chance" IS ENABLED\nDefault: 50</text>
 	</string>
 	
+	<string id="ui_mcm_barrier_defense_cooldown_print_debug">
+		<text>Print Debug to log?</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_print_debug_desc">
+		<text>Controls whether to print useful debug information or not.\nDefault: False</text>
+	</string>
+	
 </string_table>

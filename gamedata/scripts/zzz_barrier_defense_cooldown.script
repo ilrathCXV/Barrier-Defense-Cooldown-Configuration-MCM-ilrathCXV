@@ -1,17 +1,24 @@
 local get_config = zzz_barrier_defense_cooldown_mcm.get_config
 
-local cooldown_days_modified = get_config("cooldown_days") or 7
-local starting_cooldown_modified = get_config("starting_cooldown") or 7
-local monolith_active = get_config("monolith") or true
-local zombies_active = get_config("zombies") or true
-local is_repeatable = get_config("repeatable") or false
-local modify_chance = get_config("modify_chance") or false
-local chance_percent = get_config("chance_percent") or 50
+local cooldown_days_modified = get_config("cooldown_days")
+local starting_cooldown_modified = get_config("starting_cooldown")
+local monolith_active = get_config("monolith")
+local zombies_active = get_config("zombies")
+local is_repeatable = get_config("repeatable")
+local modify_chance = get_config("modify_chance")
+local chance_percent = get_config("chance_percent")
+local print_debug = get_config("print_debug")
 
 ----------------------------------------------------------------------------------
 ------------------- Barrier Stuff - ilrathCXV Dec. 9, 2022 -----------------------
------------------------ Last Updated: March 29, 2024 -----------------------------
+----------------------- Last Updated: August 11, 2024 -----------------------------
 ----------------------------------------------------------------------------------
+
+local function print_barrier(...)
+	if print_debug then
+		printf(...)
+	end
+end
 
 barrier_defense_available = tasks_defense.barrier_defense_available
 local ta2ti = utils_data.CTime_from_table
@@ -26,11 +33,11 @@ end
 
 function load_state(mdata)
 	if mdata.defense_task_data then
-		printf('loading mdata')
+		-- printf('loading mdata')
 		MDATA = mdata.defense_task_data
 		--utils_data.print_table(MDATA)
 	else
-		printf('new mdata')
+		-- printf('new mdata')
 		MDATA = {}
 		MDATA.barrier_defense_monolith = {}
 		MDATA.barrier_defense_zombie = {}
@@ -38,13 +45,8 @@ function load_state(mdata)
 	end
 end
 
-function on_game_start()
-	RegisterScriptCallback("save_state",save_state)
-	RegisterScriptCallback("load_state",load_state)
-end
-
 function tasks_defense.barrier_defense_available(tid)
-	printl('barrier_defense_available(%s)',tid)
+	print_barrier('Barrier Defense Available: %s | Mono. option: %s | Zeds option: %s',tid, monolith_active, zombies_active)
 	-- dont crash
 	if not db.actor then return false end
 	
@@ -52,8 +54,14 @@ function tasks_defense.barrier_defense_available(tid)
 ------------------------- ilrathCXV choice edits ---------------------------
 ----------------------------------------------------------------------------
 
-	if (not monolith_active and (tid == 'barrier_defense_monolith')) then return false end
-	if (not zombies_active and (tid == 'barrier_defense_zombie')) then return false end
+	if (not monolith_active and (tid == 'barrier_defense_monolith')) then
+		print_barrier('Barrier Defense Monolith was picked, but Monolith option is not enabled')
+		return false 
+	end
+	if (not zombies_active and (tid == 'barrier_defense_zombie')) then
+		print_barrier('Barrier Defense Zombies was picked, but Zombies option is not enabled')
+		return false 
+	end
 	
 ----------------------------------------------------------------------------
 ------------------------ ilrathCXV choice edits end ------------------------
@@ -61,9 +69,16 @@ function tasks_defense.barrier_defense_available(tid)
 	
 		-- dont trigger if already had message
 	if not is_repeatable then
-		if db.actor:has_info('barrier_defense_monolith_announced') then return false end
-		if db.actor:has_info('barrier_defense_zombie_announced') then return false end
+		if db.actor:has_info('barrier_defense_monolith_announced') then
+			print_barrier('Barrier Defense Monolith was picked, but Monolith has been completed AND "Repeatable" option is not enabled (%s)', is_repeatable)
+			return false 
+		end
+		if db.actor:has_info('barrier_defense_zombie_announced') then
+			print_barrier('Barrier Defense Zombies was picked, but Zombies has been completed AND "Repeatable" option is not enabled (%s)', is_repeatable)
+			return false
+		end
 	end
+	
 	-- dont trigger if quest already started
 	if axr_task_manager.ongoing_tasks['barrier_defense_monolith'] then return false end
 	if axr_task_manager.ongoing_tasks['barrier_defense_zombie'] then return false end
@@ -73,7 +88,10 @@ function tasks_defense.barrier_defense_available(tid)
 	-- should check vs default_comm in gameplay_disguise but what if disguise is disabled? it it nil? or what?
 	if game_relations.is_factions_enemies(character_community(db.actor),"freedom") then return false end
 	
-	if not MDATA then return false end
+	if not MDATA then
+		print_barrier('Barrier Defense: MDATA was not found!!!')
+		return false
+	end
 	-- printl('barrier_defense_available(%s) BBB',tid)
 	
 	-- dont trigger if game started less than a week ago
@@ -96,7 +114,7 @@ function tasks_defense.barrier_defense_available(tid)
 	-- printf('delta - %s', delta)
 	-- 	if delta < 7 then 
 	if delta < cooldown_days_modified then 
-		printl('not enough time since last mission')
+		print_barrier('Not enough time since Barrier Defense: Delta - %s | Cooldown Days - %s', delta, cooldown_days_modified)
 		return false 
 	end
 	-- printl('barrier_defense_available(%s) DDD',tid)
@@ -109,7 +127,7 @@ function tasks_defense.barrier_defense_available(tid)
 		local delta = game.get_game_time():diffSec(lct) / (3600 * 24)
 		-- printf('delta2 - %s', delta2)
 		if delta < 1 then 
-			printf('not enough time since last check')
+			print_barrier('Not enough time since last Barrier Defense check')
 			return false 
 		end
 	end
@@ -137,6 +155,11 @@ function tasks_defense.barrier_defense_available(tid)
 	
 	-- local ret = pret(math.random()) > chance
 	local ret = math.random() > chance
-	-- printf('ret %s', ret)
+	print_barrier('Was Barrier Defense rolled? (%s)', ret)
 	return ret
+end
+
+function on_game_start()
+	RegisterScriptCallback("save_state",save_state)
+	RegisterScriptCallback("load_state",load_state)
 end

@@ -6,6 +6,7 @@ local defaults = {
 	["repeatable"] = false,
 	["modify_chance"] = false,
 	["chance_percent"] = 50,
+	["print_debug"] = false,
 }
 
 function get_config(key)
@@ -23,6 +24,7 @@ function on_mcm_load()
             {id = "repeatable", type = "check", val = 1, def=false},
 			{id = "modify_chance", type = "check", val = 1, def=false},
 			{id = "chance_percent", type = "track", val = 2, min = 0, max = 100, step = 1, def = 50 },
+            {id = "print_debug", type = "check", val = 1, def=false},
 		}
 	}
 	return options
