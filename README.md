@@ -1,3 +1,5 @@
+# Barrier Defense Cooldown Configuration (MCM)
+
 This mod will allow you to control certain aspects regarding the Army Warehouse "Barrier Defense" mission in S.T.A.L.K.E.R. Anomaly:
 - Change the amount of days before the game tries to give you the next Barrier Defense
 - Change the amount of days needed after a fresh save before the game decides to start giving you Barrier Defense
