@@ -6,6 +6,7 @@ This mod will allow you to control certain aspects regarding the Army Warehouse 
 - Change whether or not Barrier Defense missions are "repeatable" (you will be able to get these missions again even after completing one or both of them)
 - Pick which Barrier Defense you want to receive when rolled: Monolith, Zombies, both, or neither (_**Neither will result in no Barrier Defense ever happening**_)
 - Change the chance that a Barrier Defense will occur whenever the game checks for a Barrier Defense event
+- Change the amount of total enemy squads that spawn for a Barrier Defense event (additional starting squads, Monolith squads, Zombified sqauds)
 
 *NOTE: When changing your MCM settings, you either need to go to a new level OR reload your save after making your changes*
 
