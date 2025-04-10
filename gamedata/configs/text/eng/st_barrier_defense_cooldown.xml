@@ -18,11 +18,11 @@
 	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown_desc">
 		<text>This will change the amount of days on a new save before Barrier Defense can start to appear.\nDefault: 7 days</text>
 	</string>
-	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown">
-		<text>Days Before Barrier Defense Start</text>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_squads">
+		<text>Number of starting Enemy Squads?</text>
 	</string>
-	<string id="ui_mcm_barrier_defense_cooldown_starting_cooldown_desc">
-		<text>This will change the amount of days on a new save before Barrier Defense can start to appear.\nDefault: 7 days</text>
+	<string id="ui_mcm_barrier_defense_cooldown_starting_squads_desc">
+		<text>This changes the number of enemy squads that spawn at the start of the Barrier Defense.\nDefault: 3 squads</text>
 	</string>
 	<string id="ui_mcm_barrier_defense_cooldown_repeatable">
 		<text>Barrier Defense Repeatable</text>
@@ -37,11 +37,23 @@
 	<string id="ui_mcm_barrier_defense_cooldown_monolith_desc">
 		<text>Decides whether or not the Monolith Barrier task can be rolled\nDefault: True</text>
 	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_mono_squads">
+		<text>Number of total Monolith Squads?</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_mono_squads_desc">
+		<text>This changes the TOTAL number of Monolith squads that spawn for their Barrier Defense mission.\nDefault: 6 squads</text>
+	</string>
 	<string id="ui_mcm_barrier_defense_cooldown_zombies">
 		<text>Zombified Stalkers Barrier Event</text>
 	</string>
 	<string id="ui_mcm_barrier_defense_cooldown_zombies_desc">
 		<text>Decides whether or not the Zombies Barrier task can be rolled\nDefault: True</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_zomb_squads">
+		<text>Zombified Stalkers Barrier Event</text>
+	</string>
+	<string id="ui_mcm_barrier_defense_cooldown_zomb_squads_desc">
+		<text>This changes the TOTAL number of Zombified squads that spawn for their Barrier Defense mission.\nDefault: 8 squads</text>
 	</string>
 	
 	<string id="ui_mcm_barrier_defense_cooldown_modify_chance">

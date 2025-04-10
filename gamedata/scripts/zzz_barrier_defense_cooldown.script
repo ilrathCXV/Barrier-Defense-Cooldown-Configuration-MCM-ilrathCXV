@@ -46,6 +46,9 @@ function load_state(mdata)
 end
 
 function tasks_defense.barrier_defense_available(tid)
+
+	local td_mdata = tasks_defense.MDATA
+
 	print_barrier('Barrier Defense Available: %s | Mono. option: %s | Zeds option: %s',tid, monolith_active, zombies_active)
 	-- dont crash
 	if not db.actor then return false end
@@ -62,33 +65,30 @@ function tasks_defense.barrier_defense_available(tid)
 		print_barrier('Barrier Defense Zombies was picked, but Zombies option is not enabled')
 		return false 
 	end
-	
+	if (zombies_active and monolith_active) then
+		tid = ((math.random(1,100) > 50) and 'barrier_defense_zombie') or 'barrier_defense_monolith'
+	end
 ----------------------------------------------------------------------------
 ------------------------ ilrathCXV choice edits end ------------------------
 ----------------------------------------------------------------------------
 	
 		-- dont trigger if already had message
 	if not is_repeatable then
-		if db.actor:has_info('barrier_defense_monolith_announced') then
-			print_barrier('Barrier Defense Monolith was picked, but Monolith has been completed AND "Repeatable" option is not enabled (%s)', is_repeatable)
+		if db.actor:has_info('barrier_defense_monolith_announced') or db.actor:has_info('barrier_defense_zombie_announced') then
+			print_barrier('%s was picked, but Monolith has been completed AND "Repeatable" option is not enabled (%s)', tid, is_repeatable)
 			return false 
-		end
-		if db.actor:has_info('barrier_defense_zombie_announced') then
-			print_barrier('Barrier Defense Zombies was picked, but Zombies has been completed AND "Repeatable" option is not enabled (%s)', is_repeatable)
-			return false
 		end
 	end
 	
 	-- dont trigger if quest already started
-	if axr_task_manager.ongoing_tasks['barrier_defense_monolith'] then return false end
-	if axr_task_manager.ongoing_tasks['barrier_defense_zombie'] then return false end
+	if axr_task_manager.ongoing_tasks['barrier_defense_monolith'] or axr_task_manager.ongoing_tasks['barrier_defense_zombie'] then return false end
 	
 	-- printl('barrier_defense_available(%s) AAA',tid)
 	-- dont trigger if hostile to freedom
 	-- should check vs default_comm in gameplay_disguise but what if disguise is disabled? it it nil? or what?
-	if game_relations.is_factions_enemies(character_community(db.actor),"freedom") then return false end
+	if (game_relations.is_factions_enemies(character_community(db.actor),"freedom") and (relation_registry.community_goodwill("freedom", AC_ID) < 1000)) then return false end
 	
-	if not MDATA then
+	if not td_mdata then
 		print_barrier('Barrier Defense: MDATA was not found!!!')
 		return false
 	end
@@ -102,9 +102,9 @@ function tasks_defense.barrier_defense_available(tid)
 	
 	-- printl('barrier_defense_available(%s) CCC',tid)
 	-- dont trigger if less than a week passed since last defense, either joined or skipped
-	local last1 = MDATA.barrier_defense_monolith.last_msg_time and ta2ti(MDATA.barrier_defense_monolith.last_msg_time)
+	local last1 = td_mdata.barrier_defense_monolith.last_msg_time and ta2ti(td_mdata.barrier_defense_monolith.last_msg_time)
 	-- printl('barrier_defense_available(%s) CCC1',tid)
-	local last2 = MDATA.barrier_defense_zombie.last_msg_time and ta2ti(MDATA.barrier_defense_zombie.last_msg_time)
+	local last2 = td_mdata.barrier_defense_zombie.last_msg_time and ta2ti(td_mdata.barrier_defense_zombie.last_msg_time)
 	-- printl('barrier_defense_available(%s) CCC2',tid)
 	local delta1 = last1 and game.get_game_time():diffSec(last1) / (3600 * 24) or 100
 	-- printl('barrier_defense_available(%s) CCC3',tid)
@@ -120,10 +120,10 @@ function tasks_defense.barrier_defense_available(tid)
 	-- printl('barrier_defense_available(%s) DDD',tid)
 	
 	-- dont trigger if last check was done less than a day ago to prevent changing level until triggered
-	-- printf('MDATA[tid].last_check_time -> %s',MDATA[tid].last_check_time)
-	if MDATA[tid].last_check_time then
+	-- printf('MDATA[tid].last_check_time -> %s',td_mdata[tid].last_check_time)
+	if td_mdata[tid].last_check_time then
 		-- printf('checking MDATA[tid].last_check_time')
-		local lct = ta2ti(MDATA[tid].last_check_time)
+		local lct = ta2ti(td_mdata[tid].last_check_time)
 		local delta = game.get_game_time():diffSec(lct) / (3600 * 24)
 		-- printf('delta2 - %s', delta2)
 		if delta < 1 then 
@@ -131,7 +131,7 @@ function tasks_defense.barrier_defense_available(tid)
 			return false 
 		end
 	end
-	MDATA[tid].last_check_time = ti2ta(game.get_game_time())
+	td_mdata[tid].last_check_time = ti2ta(game.get_game_time())
 	-- printl('barrier_defense_available(%s) EEE',tid)
 	-- local function pret(x)
 		-- -- printf('chance: %s',x)
@@ -162,4 +162,10 @@ end
 function on_game_start()
 	RegisterScriptCallback("save_state",save_state)
 	RegisterScriptCallback("load_state",load_state)
+	
+	tasks_defense.MONO_SQUADS 		= get_config("mono_squads") or tasks_defense.MONO_SQUADS or 6
+	tasks_defense.ZOMB_SQUADS 		= get_config("zomb_squads") or tasks_defense.ZOMB_SQUADS or 8
+	tasks_defense.STARTING_SQUADS 	= get_config("starting_squads") or tasks_defense.STARTING_SQUADS or 3
+	
+	print_barrier('Mono Squads: %s | Zomb Squads: %s | Starting Enemy Squads: %s', tasks_defense.MONO_SQUADS, tasks_defense.ZOMB_SQUADS, tasks_defense.STARTING_SQUADS)
 end

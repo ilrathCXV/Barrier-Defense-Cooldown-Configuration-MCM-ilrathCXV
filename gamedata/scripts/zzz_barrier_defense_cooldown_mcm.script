@@ -1,8 +1,11 @@
 local defaults = {
 	["cooldown_days"] = 7,
 	["starting_cooldown"] = 7,
+	["starting_squads"] = 3,
 	["monolith"] = true,
+	["mono_squads"] = 6,
 	["zombies"] = true,
+	["zomb_squads"] = 8,
 	["repeatable"] = false,
 	["modify_chance"] = false,
 	["chance_percent"] = 50,
@@ -19,12 +22,15 @@ function on_mcm_load()
 			{ id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_barrier_defense_cooldown_title", size = { 512, 50 }, spacing = 20 },
 			{ id = "cooldown_days", type = "track", val = 2, min = 1, max = 14, step = 1, def = 7 },
 			{ id = "starting_cooldown", type = "track", val = 2, min = 1, max = 14, step = 1, def = 7 },
-			{id = "monolith", type = "check", val = 1, def=true},
-            {id = "zombies", type = "check", val = 1, def=true},
-            {id = "repeatable", type = "check", val = 1, def=false},
-			{id = "modify_chance", type = "check", val = 1, def=false},
-			{id = "chance_percent", type = "track", val = 2, min = 0, max = 100, step = 1, def = 50 },
-            {id = "print_debug", type = "check", val = 1, def=false},
+			{ id = "starting_squads", type = "track", val = 2, min = 0, max = 6, step = 1, def = 3 },
+			{ id = "monolith", type = "check", val = 1, def=true},
+			{ id = "mono_squads", type = "track", val = 2, min = 3, max = 20, step = 1, def = 6},
+            { id = "zombies", type = "check", val = 1, def=true},
+            { id = "zomb_squads", type = "track", val = 2, min = 3, max = 20, step = 1, def = 8},
+            { id = "repeatable", type = "check", val = 1, def=false},
+			{ id = "modify_chance", type = "check", val = 1, def=false},
+			{ id = "chance_percent", type = "track", val = 2, min = 0, max = 100, step = 1, def = 50 },
+            { id = "print_debug", type = "check", val = 1, def=false},
 		}
 	}
 	return options
